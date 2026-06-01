@@ -299,7 +299,20 @@ function AdminDashboard() {
                       <div className="text-sm font-bold shrink-0">
                         {e.price === 0 ? <span className="text-emerald-500">Free</span> : `$${e.price}`}
                       </div>
-                      <Button variant="ghost" size="icon" onClick={() => api.deleteEvent(e.id).then(() => { toast.success("Deleted"); refresh(); })}>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={async () => {
+                            if (!confirm("Delete this event? This cannot be undone.")) return;
+                            try {
+                              await api.adminDeleteEvent(e.id);
+                              toast.success("Event removed successfully");
+                              refresh();
+                            } catch (err) {
+                              toast.error(err instanceof Error ? err.message : "Failed to delete event");
+                            }
+                          }}
+                        >
                         <Trash2 className="h-4 w-4 text-destructive" />
                       </Button>
                     </div>

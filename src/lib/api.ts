@@ -232,6 +232,10 @@ export const api = {
     if (MODE === "mock") return mockApi.deleteEvent(id);
     return http(`/events/${id}`, { method: "DELETE" });
   },
+  async adminDeleteEvent(id: string): Promise<{ ok: true }> {
+    if (MODE === "mock") return mockApi.deleteEvent(id);
+    return http(`/admin/events/${id}`, { method: "DELETE" });
+  },
   async myCompanyEvents(): Promise<EventItem[]> {
     if (MODE === "mock") return mockApi.myCompanyEvents();
     return http("/company/events");
